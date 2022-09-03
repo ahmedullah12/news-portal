@@ -49,11 +49,6 @@ const displayNews = (data) => {
     }
     else{
         data.forEach(news => {
-            // for(const singleNews in news){
-            //     const singleNewsId = singleNews._id;
-            //     console.log(singleNewsId)
-            // }
-            
             const newsDiv = document.createElement('div');
             newsDiv.classList.add("d-lg-flex", "align-items-center", "bg-white", "my-5", "rounded-3",)
             newsDiv.innerHTML = `
