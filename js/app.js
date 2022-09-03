@@ -31,9 +31,12 @@ const loadCategoryNews = (categoryId) => {
     .then(data => displayNews(data.data));
 }
 const displayNews = (data) => {
-    console.log(data);
+    
     const newsSection = document.getElementById('news-section');
     newsSection.innerHTML = '';
+    console.log(data.length);
+    // const itemsFoundDiv = document.createElement('div')
+    
     if(data.length === 0){
         const noNews = document.createElement('p');
         noNews.classList.add("text-warning", "fs-2", "my-4", "text-center")
@@ -42,7 +45,11 @@ const displayNews = (data) => {
     }
     else{
         data.forEach(news => {
-            console.log(news)
+            // for(const singleNews in news){
+            //     const singleNewsId = singleNews._id;
+            //     console.log(singleNewsId)
+            // }
+            
             const newsDiv = document.createElement('div');
             newsDiv.classList.add("d-lg-flex", "align-items-center", "bg-white", "my-5", "rounded-3",)
             newsDiv.innerHTML = `
@@ -56,7 +63,7 @@ const displayNews = (data) => {
                     <div class="d-flex">
                         <img height="40px" width="40px" class="rounded-circle mt-2 me-2" src="${news.author.img}" alt="">
                         <div class= "pt-1" >
-                            <p class= "p-0 m-0">${news.author.name ? news.author.name : 'Name not available'}</p>
+                            <p class= "p-0 m-0">${news.author.name    ?  news.author.name : 'Name not available' }</p>
                             <p class = "p-0 m-0">${news.author.published_date ? news.author.published_date : 'No date available'}</p>
                         </div>
                     </div>
@@ -72,18 +79,51 @@ const displayNews = (data) => {
                         <i class="bi bi-star-half"></i>
                     </div>
                     <div>
-                        <button id= "btn-details" class="text-primary btn "><i class="bi bi-arrow-right fs-1 fs-lg-3"></i></button>
+                        <button id= "btn-details" class="text-primary btn" onclick = "loadNewsDetails('${news._id}')"><i class="bi bi-arrow-right fs-1 fs-lg-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i></button>
                     </div>
                 </div>
             </div>
             `
             newsSection.appendChild(newsDiv);
+            
         });
+        
     }
 }
+const loadNewsDetails = (newsId) => {
+    const url = `https://openapi.programming-hero.com/api/news/${newsId}`
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayNewsDetails(data.data[0]))
+}
+
+const displayNewsDetails = (data) => {
+    // console.log(data)
+    const modalContentDiv = document.getElementById('modal-content-div');
+    modalContentDiv.innerHTML = `
+    <div class="modal-header d-block ">
+        <div class="d-flex">
+            <img height="200px" class="w-75 ms-lg-5" src="${data.image_url}" alt="">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <h5 class="modal-title" id="detailsTitleLabel">${data.title}</h5>
+    </div>
+    <div class="modal-body">
+        <p>${data.details}</p>
+        <p>Rating: ${data.rating.number ? data.rating.number : 'No rating availabe'}</p>
+        <p>Rating Badge: ${data.rating.badge ? data.rating.badge : 'No rating badge available'}</p>
+        <p>Total Views: ${data.total_view ? data.total_view : 'No views available'}</p>
+    </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  </div>
+    `
+
+
     
 
-// loadNews(01);
+}
+// displayNewsDetails();
 
 
 
