@@ -44,12 +44,12 @@ const displayNews = (data) => {
         data.forEach(news => {
             console.log(news)
             const newsDiv = document.createElement('div');
-            newsDiv.classList.add("d-lg-flex", "align-items-center", "bg-white", "my-5", "rounded-3")
+            newsDiv.classList.add("d-lg-flex", "align-items-center", "bg-white", "my-5", "rounded-3",)
             newsDiv.innerHTML = `
             <div>
-                <img class = "p-lg-4" src="${news.thumbnail_url}" alt="">
+                <img class = "p-lg-4 m-5 m-lg-0" src="${news.thumbnail_url}" alt="">
             </div>
-            <div class = "mb-2 pe-5">
+            <div class = "mb-5 pe-lg-5 ps-2 ps-lg-0 ">
                 <h3 class = "mb-3">${news.title}</h3>
                 <p class= "mb-3">${news.details.slice(0,320)} ...</p>
                 <div class= "d-block d-lg-flex  justify-content-between ">
@@ -64,7 +64,7 @@ const displayNews = (data) => {
                         <i class="bi bi-eye"></i>
                         <p>${news.total_view ? news.total_view : 'No views availabe'}</p>
                     </div>
-                    <div class= " mt-3 text-secondary">
+                    <div class= " mt-0 mt-lg-3 text-secondary">
                         <i class="bi bi-star-fill"></i>
                         <i class="bi bi-star-fill"></i>
                         <i class="bi bi-star-fill"></i>
@@ -72,7 +72,7 @@ const displayNews = (data) => {
                         <i class="bi bi-star-half"></i>
                     </div>
                     <div>
-                        <button id= "btn-details" class="text-primary btn fs-3 "><i class="bi bi-arrow-right"></i></button>
+                        <button id= "btn-details" class="text-primary btn "><i class="bi bi-arrow-right fs-1 fs-lg-3"></i></button>
                     </div>
                 </div>
             </div>
