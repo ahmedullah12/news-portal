@@ -2,28 +2,22 @@ const loadCategories = () => {
     const url = 'https://openapi.programming-hero.com/api/news/categories';
     fetch(url)
         .then(res => res.json())
-        .then(data => displayCategories(data.data.news_category))
-        
-        
+        .then(data => displayCategories(data.data.news_category)) 
 }
-
+function textChange(){
+    document.categoryText.style.color = 'blue';
+}
 
 const displayCategories = (data) => {
     const categoriesSection = document.getElementById('categories-section');
-    
     data.forEach(category => {
-        
         const categoryName = category.category_name;
-        
         console.log(categoryName)
         const categoryLink = document.createElement('a');
-
-        categoryLink.innerHTML = `<a style="cursor: pointer;" onclick = "loadCategoryNews(${category.category_id})"  class = "d-block text-decoration-none text-secondary"> ${categoryName}</a>`;
-        
+        categoryLink.innerHTML = `<a id = "btn" style="cursor: pointer;
+        " onclick = "loadCategoryNews(${category.category_id})"  class = "d-block text-decoration-none text-secondary"> ${categoryName}</a>`;
         categoriesSection.appendChild(categoryLink);
-        
     });
-   
 }  
 
 const toggleSpinner = isLoading => {
@@ -34,17 +28,25 @@ const toggleSpinner = isLoading => {
     else{
         loaderSection.classList.add('d-none');
     }
-
 }
-
 
 const loadCategoryNews = (categoryId) => {
     const url = `https://openapi.programming-hero.com/api/news/category/0${categoryId}`;
-    
     fetch(url)
-    .then(res => res.json())
-    .then(data => displayNews(data.data));
+        .then(res => res.json())
+        .then(data => displayNews(data.data));
+
     toggleSpinner(true)
+}
+
+function compare( a, b ) {
+    if ( a.total_view < b.total_view ){
+      return 1;
+    }
+    if ( a.total_view > b.total_view ){
+      return -1;
+    }
+    return 0;
 }
 
 const displayNews = (data) => {
@@ -52,7 +54,7 @@ const displayNews = (data) => {
     itemsFoundSection.innerHTML = `${data.length} items found in this category`;
     const newsSection = document.getElementById('news-section');
     newsSection.innerHTML = '';
-    
+    data.sort(compare);
     
     if(data.length === 0){
         const noNews = document.createElement('p');
@@ -97,49 +99,40 @@ const displayNews = (data) => {
             </div>
             `
             newsSection.appendChild(newsDiv);
-            
         });
-        
     }
-    toggleSpinner(false)
+    toggleSpinner(false);
 }
 const loadNewsDetails = (newsId) => {
     const url = `https://openapi.programming-hero.com/api/news/${newsId}`
     fetch(url)
-    .then(res => res.json())
-    .then(data => displayNewsDetails(data.data[0]))
+        .then(res => res.json())
+        .then(data => displayNewsDetails(data.data[0]))
 }
 
 const displayNewsDetails = (data) => {
-    
+    console.log(data)
     const modalContentDiv = document.getElementById('modal-content-div');
     modalContentDiv.innerHTML = `
-    <div class="modal-header d-block ">
-        <div class="d-flex">
-            <img height="200px" class="w-75 ms-lg-5" src="${data.image_url}" alt="">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-header d-block ">
+            <div class="d-flex">
+                <img height="200px" class="w-75 ms-lg-5" src="${data.image_url}" alt="">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <h5 class="modal-title" id="detailsTitleLabel">${data.title}</h5>
         </div>
-        <h5 class="modal-title" id="detailsTitleLabel">${data.title}</h5>
-    </div>
-    <div class="modal-body">
-        <p>${data.details}</p>
-        <p>Rating: ${data.rating.number ? data.rating.number : 'No rating availabe'}</p>
-        <p>Rating Badge: ${data.rating.badge ? data.rating.badge : 'No rating badge available'}</p>
-        <p>Total Views: ${data.total_view ? data.total_view : 'No views available'}</p>
-    </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-  </div>
+        <div class="modal-body">
+            <p>${data.details}</p>
+            <p>Author Name: ${data.author.name}</p>
+            <p>Rating: ${data.rating.number ? data.rating.number : 'No rating availabe'}</p>
+            <p>Rating Badge: ${data.rating.badge ? data.rating.badge : 'No rating badge available'}</p>
+            <p>Total Views: ${data.total_view ? data.total_view : 'No views available'}</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
     `
-
-
-    
-
 }
 
-
-
-
-
 loadCategories();
-loadCategoryNews(05);
+loadCategoryNews(02);
