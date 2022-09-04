@@ -12,7 +12,7 @@ const displayCategories = (data) => {
     const categoriesSection = document.getElementById('categories-section');
     
     data.forEach(category => {
-        // console.log(category.category_id)
+        
         const categoryName = category.category_name;
         console.log(categoryName)
         const categoryLink = document.createElement('a');
@@ -28,7 +28,7 @@ const displayCategories = (data) => {
 
 const loadCategoryNews = (categoryId) => {
     const url = `https://openapi.programming-hero.com/api/news/category/0${categoryId}`;
-    // console.log(categoryId);
+    
     fetch(url)
     .then(res => res.json())
     .then(data => displayNews(data.data));
@@ -39,7 +39,7 @@ const displayNews = (data) => {
     itemsFoundSection.innerHTML = `${data.length} items found in this category`;
     const newsSection = document.getElementById('news-section');
     newsSection.innerHTML = '';
-    // const itemsFoundDiv = document.createElement('div')
+    
     
     if(data.length === 0){
         const noNews = document.createElement('p');
@@ -97,7 +97,7 @@ const loadNewsDetails = (newsId) => {
 }
 
 const displayNewsDetails = (data) => {
-    // console.log(data)
+    
     const modalContentDiv = document.getElementById('modal-content-div');
     modalContentDiv.innerHTML = `
     <div class="modal-header d-block ">
@@ -122,10 +122,10 @@ const displayNewsDetails = (data) => {
     
 
 }
-// displayNewsDetails();
+
 
 
 
 
 loadCategories();
-loadCategoryNews(08)
+loadCategoryNews(05);
