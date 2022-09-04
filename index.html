@@ -48,7 +48,7 @@
             </select>
             </div>
            
-            <div class="d-sm-block">
+            <div class="d-sm-block mt-3 mt-lg-0">
               <button class="btn btn-primary">Today's Pick</button>
               <button class="btn btn-outline-primary">Trending</button>
             </div>
@@ -61,13 +61,23 @@
         </section>
 
         <!-- News Detail Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="detailsTitleLabel" aria-hidden="true">
-          <div class="modal-dialog ">
-            <div id="modal-content-div" class="modal-content">
-              
+        <section>
+          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="detailsTitleLabel" aria-hidden="true">
+            <div class="modal-dialog ">
+              <div id="modal-content-div" class="modal-content">
+                
+              </div>
             </div>
           </div>
-        </div>
+        </section>
+
+        <section id="loader" class="d-none">
+          <div style="height: 300px" class="d-flex justify-content-center align-items-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </section>
     </main>
 
 
