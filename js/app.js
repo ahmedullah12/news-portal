@@ -14,6 +14,7 @@ const displayCategories = (data) => {
     data.forEach(category => {
         
         const categoryName = category.category_name;
+        
         console.log(categoryName)
         const categoryLink = document.createElement('a');
 
